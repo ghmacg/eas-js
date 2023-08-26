@@ -4,6 +4,49 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#title {
+    font-size: 80px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+#container {
+    display: flex;
+    gap: 100px;
+}
+
+#buttons-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 30px;
+}
+
+button {
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    border: 1px solid #333;
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:active {
+    background-color: #333;
+    color: #ededed;
+    transform: scale(1);
 }
 
 #grid-container {
@@ -23,4 +66,8 @@ body {
 .square {
     display: flex;
     flex: auto;
+}
+
+#hidden {
+    width: 200px;
 }
