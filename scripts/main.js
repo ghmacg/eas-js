@@ -1,33 +1,43 @@
-const newSizeBtn = document.querySelector('#new-size');
-const colorModeBtn = document.querySelector('#color-mode');
-//const rainbowModeBtn = document.querySelector('#rainbow-mode');
-//const eraserBtn = document.querySelector('#eraser');
-const clearBtn = document.querySelector('#clear');
-
 let currentSize;
+let currentMode = 'color';
 
-// Method to prompt the user to choose how many squares he wants on the grid when he clicks the new size button
-newSizeBtn.addEventListener('click', () => {
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        button.id === 'new-size' ? setNewSize() :
+            button.id === 'color-mode' ? currentMode = 'color' :
+                button.id === 'rainbow-mode' ? currentMode = 'rainbow' :
+                    button.id === 'eraser' ? currentMode = 'eraser' :
+                        button.id === 'clear' ? clearGrid() : 
+                            button.id;
+    });
+});
+
+const setCurrentMode = () => currentMode == 'eraser' ? currentMode = 'color' : currentMode;
+
+function setNewSize () {
     let userInput = Number(prompt('How many squares do you want?'));
 
     if ((userInput > 0) && (userInput <= 100)) {
-        clearSquares();
+        removeSquares();
         generateSquares(userInput);
         currentSize = userInput;
+        setCurrentMode();
     } else {
         alert('ERROR: use numbers between 1-100');
     };
-});
+};
 
-// Method to clear grid and mantain current size
-clearBtn.addEventListener('click', () => {
-    clearSquares();
-    generateSquares(currentSize)
-});
+function clearGrid () {
+    removeSquares();
+    generateSquares(currentSize);
+    setCurrentMode();
+}
 
 // Function to get random color for coloring Rainbow Mode 
+const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
 function getRandomColor () {
-    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
     const r = randomBetween(0, 255);
     const g = randomBetween(0, 255);
     const b = randomBetween(0, 255);
@@ -43,8 +53,12 @@ document.body.onmouseup = () => mouseDown = false;
 // Function to color the squares when mouse is clicked
 function colorSquare (e) {
     if (e.type === 'mouseover' && !mouseDown) return;
-    e.target.style.backgroundColor = getRandomColor();
-}
+
+    currentMode == 'color' ? e.target.style.backgroundColor = '#333' : 
+        currentMode == 'rainbow' ? e.target.style.backgroundColor = getRandomColor() :
+            currentMode == 'eraser' ? e.target.style.backgroundColor = '#fefefe' : 
+                currentMode;
+};
 
 // Function that loops and generates a container (div) each loop for the quantity of squares (divs) wanted 
 //and then appends the container to the Grid container
@@ -68,10 +82,12 @@ function generateSquares (quantity = 16) {
 };
 
 // Function to delete all the squares from the grid
-function clearSquares () {
+function removeSquares () {
     const squareContainer = document.querySelectorAll('.square-container');
 
     squareContainer.forEach((square) => {
         square.remove();
     });
 };
+
+generateSquares()
