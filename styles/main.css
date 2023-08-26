@@ -1,3 +1,11 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #ededed;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
 #grid-container {
     display: flex;
     flex-direction: column;
