@@ -1,3 +1,31 @@
+const newSizeBtn = document.querySelector('#new-size');
+const colorModeBtn = document.querySelector('#color-mode');
+const rainbowModeBtn = document.querySelector('#rainbow-mode');
+const eraserBtn = document.querySelector('#eraser');
+const clearBtn = document.querySelector('#clear');
+
+
+newSizeBtn.addEventListener('click', () => {
+    let userInput = Number(prompt('How many squares do you want?'));
+
+    if ((userInput > 0) && (userInput <= 100)) {
+        clearSquares();
+        generateSquares(userInput);
+    } else {
+        alert('ERROR: use numbers between 1-100');
+    };
+});
+
+// Function to get random color for coloring Rainbow Mode 
+function getRandomColor () {
+    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    const rgb = `rgb(${r}, ${g}, ${b})`;
+    return rgb;
+};
+
 // Check if mouse is clicked
 let mouseDown = false;
 document.body.onmousedown = function () {
@@ -13,16 +41,6 @@ function colorSquare (e) {
     
     e.target.style.backgroundColor = getRandomColor();
 }
-
-// Function to get random color for coloring Rainbow Mode 
-function getRandomColor() {
-    const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-    const r = randomBetween(0, 255);
-    const g = randomBetween(0, 255);
-    const b = randomBetween(0, 255);
-    const rgb = `rgb(${r}, ${g}, ${b})`;
-    return rgb;
-};
 
 // Function that loops and generates a container (div) each loop for the quantity of squares (divs) wanted 
 //and then appends the container to the Grid container
@@ -44,4 +62,13 @@ function generateSquares (quantity = 16) {
 
         gridContainer.appendChild(squareContainer);
     };
+};
+
+// Function to delete all the squares from the grid
+function clearSquares () {
+    const squareContainer = document.querySelectorAll('.square-container');
+
+    squareContainer.forEach((square) => {
+        square.remove();
+    });
 };
