@@ -1,8 +1,13 @@
 let currentSize;
 let currentMode = 'color';
 let lastMode;
+let mouseDown = false;
 
 const buttons = document.querySelectorAll('button');
+
+// Check if mouse is clicked
+document.body.onmousedown = () => mouseDown = true;
+document.body.onmouseup = () => mouseDown = false;
 
 // Method to add event listener to all of the buttons
 buttons.forEach((button) => {
@@ -45,11 +50,6 @@ function clearGrid () {
     generateSquares(currentSize);
     setCurrentMode();
 }
-
-// Check if mouse is clicked
-let mouseDown = false;
-document.body.onmousedown = () => mouseDown = true;
-document.body.onmouseup = () => mouseDown = false;
 
 // Function to color the squares when mouse is clicked
 function colorSquare (e) {
