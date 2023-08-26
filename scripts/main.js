@@ -1,21 +1,24 @@
 let currentSize;
 let currentMode = 'color';
+let lastMode;
 
 const buttons = document.querySelectorAll('button');
 
+// Method to add event listener to all of the buttons
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
         button.id === 'new-size' ? setNewSize() :
             button.id === 'color-mode' ? currentMode = 'color' :
                 button.id === 'rainbow-mode' ? currentMode = 'rainbow' :
-                    button.id === 'eraser' ? currentMode = 'eraser' :
-                        button.id === 'clear' ? clearGrid() : 
-                            button.id;
+                    button.id === 'eraser' ? setEraser() :
+                        button.id === 'clear' ? clearGrid() : button.id;
     });
 });
 
-const setCurrentMode = () => currentMode == 'eraser' ? currentMode = 'color' : currentMode;
+// Function to check if the current mode is eraser if thats the case set the current mode to the last mode
+const setCurrentMode = () => currentMode === 'eraser' ? currentMode = lastMode : currentMode;
 
+// Function to ask the user how many squares he wants and set the new size
 function setNewSize () {
     let userInput = Number(prompt('How many squares do you want?'));
 
@@ -29,21 +32,19 @@ function setNewSize () {
     };
 };
 
+// Function to check if the current mode is a color mode 
+//in that case set last mode to current mode and change current mode to eraser
+function setEraser () {
+    currentMode == 'color' || currentMode == 'rainbow' ? lastMode = currentMode : currentMode;
+    currentMode = 'eraser';
+}
+
+// Function to remove the existing squares, generate the new squares with the current size and set the current mode 
 function clearGrid () {
     removeSquares();
     generateSquares(currentSize);
     setCurrentMode();
 }
-
-// Function to get random color for coloring Rainbow Mode 
-const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-function getRandomColor () {
-    const r = randomBetween(0, 255);
-    const g = randomBetween(0, 255);
-    const b = randomBetween(0, 255);
-    const rgb = `rgb(${r}, ${g}, ${b})`;
-    return rgb;
-};
 
 // Check if mouse is clicked
 let mouseDown = false;
@@ -55,9 +56,8 @@ function colorSquare (e) {
     if (e.type === 'mouseover' && !mouseDown) return;
 
     currentMode == 'color' ? e.target.style.backgroundColor = '#333' : 
-        currentMode == 'rainbow' ? e.target.style.backgroundColor = getRandomColor() :
-            currentMode == 'eraser' ? e.target.style.backgroundColor = '#fefefe' : 
-                currentMode;
+        currentMode == 'rainbow' ? e.target.style.backgroundColor = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0") :
+            currentMode == 'eraser' ? e.target.style.backgroundColor = '#fefefe' : currentMode;
 };
 
 // Function that loops and generates a container (div) each loop for the quantity of squares (divs) wanted 
