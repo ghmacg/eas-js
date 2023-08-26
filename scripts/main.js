@@ -1,19 +1,28 @@
 const newSizeBtn = document.querySelector('#new-size');
 const colorModeBtn = document.querySelector('#color-mode');
-const rainbowModeBtn = document.querySelector('#rainbow-mode');
-const eraserBtn = document.querySelector('#eraser');
+//const rainbowModeBtn = document.querySelector('#rainbow-mode');
+//const eraserBtn = document.querySelector('#eraser');
 const clearBtn = document.querySelector('#clear');
 
+let currentSize;
 
+// Method to prompt the user to choose how many squares he wants on the grid when he clicks the new size button
 newSizeBtn.addEventListener('click', () => {
     let userInput = Number(prompt('How many squares do you want?'));
 
     if ((userInput > 0) && (userInput <= 100)) {
         clearSquares();
         generateSquares(userInput);
+        currentSize = userInput;
     } else {
         alert('ERROR: use numbers between 1-100');
     };
+});
+
+// Method to clear grid and mantain current size
+clearBtn.addEventListener('click', () => {
+    clearSquares();
+    generateSquares(currentSize)
 });
 
 // Function to get random color for coloring Rainbow Mode 
@@ -28,17 +37,12 @@ function getRandomColor () {
 
 // Check if mouse is clicked
 let mouseDown = false;
-document.body.onmousedown = function () {
-    mouseDown = true;
-};
-document.body.onmouseup = function () {
-    mouseDown = false;
-};
+document.body.onmousedown = () => mouseDown = true;
+document.body.onmouseup = () => mouseDown = false;
 
 // Function to color the squares when mouse is clicked
 function colorSquare (e) {
     if (e.type === 'mouseover' && !mouseDown) return;
-    
     e.target.style.backgroundColor = getRandomColor();
 }
 
@@ -56,7 +60,6 @@ function generateSquares (quantity = 16) {
             square.classList.add('square');
             square.addEventListener('mouseover',colorSquare);
             square.addEventListener('mousedown',colorSquare);
-
             squareContainer.appendChild(square);
         };
 
