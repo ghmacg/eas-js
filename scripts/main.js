@@ -2,7 +2,6 @@ let currentSize;
 let currentMode = 'color';
 let lastMode;
 let mouseDown = false;
-
 const buttons = document.querySelectorAll('button');
 
 // Check if mouse is clicked
