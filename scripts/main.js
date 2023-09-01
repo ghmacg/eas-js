@@ -54,9 +54,9 @@ function clearGrid () {
 function colorSquare (e) {
     if (e.type === 'mouseover' && !mouseDown) return;
 
-    currentMode == 'color' ? e.target.style.backgroundColor = '#333' : 
-        currentMode == 'rainbow' ? e.target.style.backgroundColor = "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0") :
-            currentMode == 'eraser' ? e.target.style.backgroundColor = '#fefefe' : currentMode;
+    e.target.style.backgroundColor = currentMode == 'color' ? '#333' : 
+        currentMode == 'rainbow' ? "#" + ((1 << 24) * Math.random() | 0).toString(16).padStart(6, "0") :
+            currentMode == 'eraser' ? '#fefefe' : currentMode;
 };
 
 // Function that loops and generates a container (div) each loop for the quantity of squares (divs) wanted 
