@@ -2,22 +2,8 @@ let currentSize;
 let currentMode = 'color';
 let lastMode;
 let mouseDown = false;
+
 const buttons = document.querySelectorAll('button');
-
-// Check if mouse is clicked
-document.body.onmousedown = () => mouseDown = true;
-document.body.onmouseup = () => mouseDown = false;
-
-// Method to add event listener to all of the buttons
-buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-        button.id === 'new-size' ? setNewSize() :
-            button.id === 'color-mode' ? currentMode = 'color' :
-                button.id === 'rainbow-mode' ? currentMode = 'rainbow' :
-                    button.id === 'eraser' ? setEraser() :
-                        button.id === 'clear' ? clearGrid() : button.id;
-    });
-});
 
 // Function to check if the current mode is eraser if thats the case set the current mode to the last mode
 const setCurrentMode = () => currentMode === 'eraser' ? currentMode = lastMode : currentMode;
@@ -89,4 +75,24 @@ function removeSquares () {
     });
 };
 
-generateSquares()
+function sketch () {
+    generateSquares();
+
+    // Check if mouse is clicked
+    document.body.onmousedown = () => mouseDown = true;
+    document.body.onmouseup = () => mouseDown = false;
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+            button.id === 'new-size' ? setNewSize() :
+                button.id === 'color-mode' ? currentMode = 'color' :
+                    button.id === 'rainbow-mode' ? currentMode = 'rainbow' :
+                        button.id === 'eraser' ? setEraser() :
+                            button.id === 'clear' ? clearGrid() : button.id;
+        });
+    });
+};
+
+
+// Function calling
+paint();
