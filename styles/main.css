@@ -31,7 +31,9 @@ button {
     color: inherit;
     font-family: inherit;
     font-size: inherit;
-    border: 1px solid #333;
+    background-color: #fefefe;
+    border: none;
+    box-shadow: 0px 8px 20px #0000002d;
     width: 200px;
     height: 40px;
     border-radius: 5px;
@@ -44,8 +46,8 @@ button:hover {
 }
 
 button:active {
-    background-color: #333;
-    color: #ededed;
+    background-color: #ececec8c;
+    box-shadow: 0px 8px 20px #00000044;
     transform: scale(1);
 }
 
