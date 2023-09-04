@@ -95,4 +95,4 @@ function sketch () {
 
 
 // Function calling
-paint();
+sketch();
