@@ -5,7 +5,8 @@ let mouseDown = false;
 
 const buttons = document.querySelectorAll('button');
 
-// Function to check if the current mode is eraser if thats the case set the current mode to the last mode
+// Function to set current mode and check if the current mode is eraser
+//if thats the case set the current mode to the last mode
 const setCurrentMode = () => currentMode === 'eraser' ? currentMode = lastMode : currentMode;
 
 // Function to ask the user how many squares he wants and set the new size
@@ -75,6 +76,12 @@ function removeSquares () {
     });
 };
 
+function reset () {
+    currentSize = 16;
+    currentMode = 'color';
+    clearGrid();
+}
+
 function sketch () {
     generateSquares();
 
@@ -88,7 +95,8 @@ function sketch () {
                 button.id === 'color-mode' ? currentMode = 'color' :
                     button.id === 'rainbow-mode' ? currentMode = 'rainbow' :
                         button.id === 'eraser' ? setEraser() :
-                            button.id === 'clear' ? clearGrid() : button.id;
+                            button.id === 'clear' ? clearGrid(currentSize) : 
+                                button.id === 'reset' ? reset() : button.id;
         });
     });
 };
